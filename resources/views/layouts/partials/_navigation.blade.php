@@ -32,8 +32,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/cahnnel/{{$channel->slug}}">Your Channel</a>
-                            <a class="dropdown-item" href="/cahnnel/{{$channel->slug}}/edit">Channel Settings</a>
+                            <a class="dropdown-item" href="/channel/{{$channel->slug}}">Your Channel</a>
+                            <a class="dropdown-item" href="/channel/{{$channel->slug}}/edit">Channel Settings</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

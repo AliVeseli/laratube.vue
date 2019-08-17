@@ -19,4 +19,9 @@ class Channel extends Model
     {
         $this->belongsTo(User::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
