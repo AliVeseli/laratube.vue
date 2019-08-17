@@ -31,13 +31,21 @@ class ChannelController extends Controller
     public function update(Request $request, Channel $channel)
     {
         $channel_id = Auth::user()->channel->first()->id;
+        
         $request->validate([
             'name' => 'required|max:255|unique:channels,name,'.$channel_id,
             'slug' => 'required|max:255|unique:channels,slug,'.$channel_id,
-            'description' => 'required|max:1000',
+            'description' => 'max:1000',
+            'image_filename' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $channel->update($request->all());
+        $channel->update([$request->all()]);
+
+        if ($image = $request->file('image_filename')) {
+            $image->storeAs('public/uploads', $image->getClientOriginalName());
+            $channel->update(['image_filename' => $image->getClientOriginalName()]);
+        }
+
         return redirect()->back();
     }
 

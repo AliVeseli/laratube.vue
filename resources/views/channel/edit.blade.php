@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form action="/channel/{{$channel->slug}}" method="post">
+                    <form action="/channel/{{$channel->slug}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -29,7 +29,7 @@
                             <label for="slug" class="col-form-label">Channel slug</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"><span class="input-group-text  @error('slug') border-danger @enderror">{{config('app.url')}}/channel/</span></div>
-                                    <input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') ?? $channel->slug }}" required autocomplete="slug" autofocus>
+                                    <input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') ?? $channel->slug }}" required autocomplete="slug" >
                                     @error('slug')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -39,8 +39,17 @@
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-form-label">Channel Description</label>
-                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" required autocomplete="description" autofocus>{{ old('description') ?? $channel->description }}</textarea>
+                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" >{{ old('description') ?? $channel->description }}</textarea>
                                 @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="image_filename" class="col-form-label">Channel Image</label>
+                                <input type="file" id="image_filename" type="text" class="form-control-file @error('image_filename') is-invalid @enderror" name="image_filename"  >
+                                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
