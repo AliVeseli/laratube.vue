@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ChannelController extends Controller
 {
@@ -44,6 +45,11 @@ class ChannelController extends Controller
         if ($image = $request->file('image_filename')) {
             $image->storeAs('public/uploads', $image->getClientOriginalName());
             $channel->update(['image_filename' => $image->getClientOriginalName()]);
+            Image::make('storage/uploads/'.$image->getClientOriginalName())
+            ->fit(40, 40, function ($c){
+                $c->upsize();
+            })
+            ->save('storage/uploads/'.pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME).'(40x40).'.$image->getClientOriginalExtension());;
         }
 
         return redirect()->back();
